@@ -2,12 +2,16 @@ window.addEventListener('load', () => {
     /** canvas标签 */
     const canvasDom = document.querySelector('canvas');
     if (!canvasDom) return;
-    /** 画笔 */
+    /** canvas画笔 */
     const ctx = canvasDom.getContext('2d');
+    /** 提示语p标签 */
+    const tipDom = document.querySelector('p');
     /** 烟花束列表，[{x, y, r, color, speedX, speedY, countdown}] */
     let fireworks = [];
     /** 上一次绘制时间 */
     let lastTimestamp = 0;
+    /** 隐藏提示语再现回调id */
+    let hiddenTipTimeoutId = null;
 
     /**
      * @description: 设定画布大小
@@ -76,11 +80,26 @@ window.addEventListener('load', () => {
         }
     }
 
+    /**
+     * @description: 隐藏提示文字
+     * @author: Cosy247
+     * @datetime: 2023-05-15 03:13:17
+     */
+    function hiddenTip() {
+        hiddenTipTimeoutId && clearTimeout(hiddenTipTimeoutId);
+        tipDom.style.opacity = 0;
+        hiddenTipTimeoutId = setTimeout(() => {
+            tipDom.style.opacity = 1;
+        }, 5000);
+    }
+
     // 运行初始化
     {
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
-        window.addEventListener('click', createFireworks);
+        window.addEventListener('click', (event) => {
+            createFireworks(event), hiddenTip();
+        });
         drawNext();
     }
 });
