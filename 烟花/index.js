@@ -1,19 +1,30 @@
 window.addEventListener('load', () => {
-    // 元素获取
+    /** canvas标签 */
     const canvasDom = document.querySelector('canvas');
     if (!canvasDom) return;
+    /** 画笔 */
     const ctx = canvasDom.getContext('2d');
+    /** 烟花束列表，[{x, y, r, color, speedX, speedY, countdown}] */
     let fireworks = [];
+    /** 上一次绘制时间 */
     let lastTimestamp = 0;
-    // 设定画布大小
+
+    /**
+     * @description: 设定画布大小
+     * @author: Cosy247
+     * @datetime: 2023-05-15 03:10:36
+     */
     function resizeCanvas() {
         canvasDom.width = window.innerWidth;
         canvasDom.height = window.innerHeight;
     }
 
-    // 绘画烟花中的一束
-    function drawFireworksItem() {}
-
+    /**
+     * @description: 绘制下一帧，requestAnimationFrame回调函数
+     * @author: Cosy247
+     * @param {number} timestamp: 执行事件
+     * @datetime: 2023-05-15 03:09:48
+     */
     function drawNext(timestamp = 0) {
         // 获取时间间隔
         const elapsed = timestamp - lastTimestamp;
@@ -43,10 +54,13 @@ window.addEventListener('load', () => {
         requestAnimationFrame(drawNext);
     }
 
-    // 创建一个烟花
+    /**
+     * @description: 创建烟花，将每个烟花束添加到fireworks数组中
+     * @author: Cosy247
+     * @param {event} event: 点击事件
+     * @datetime: 2023-05-15 03:08:24
+     */
     function createFireworks({ x, y }) {
-        ctx.fillStyle = '#8a7';
-        let timeCount = 100;
         for (let index = 0; index < 100; index++) {
             const speed = Math.random() * 2;
             const dir = Math.random() * Math.PI * 2;
@@ -62,13 +76,11 @@ window.addEventListener('load', () => {
         }
     }
 
-    function init() {
-        // 页面缩放改变画布大小
+    // 运行初始化
+    {
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
         window.addEventListener('click', createFireworks);
         drawNext();
     }
-
-    init();
 });
