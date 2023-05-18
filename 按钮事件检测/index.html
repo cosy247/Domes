@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <p>图片不可编辑标签无法监听key事件，添加tabindex属性和值可以获取事件，style将outline设置成none隐藏外框</p>
+    <div onkeydown="console.log(event)" tabindex="0">点我点我，控制台显示事件信息</div>
+</body>
+</html>
