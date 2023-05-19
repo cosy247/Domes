@@ -8,7 +8,6 @@
     <style>
         div {
             padding: 100px 0;
-            position: relative;
             margin: 100px auto 0;
             width: 500px;
             height: 500px;
@@ -40,6 +39,7 @@
     <section>前去：</section>
 </body>
 <script>
+    // 生成节点
     const divDom = document.querySelector('div');
     const items = [];
     const amount = 20;
@@ -54,24 +54,25 @@
     for (let index = 0; index < amount; index++) {
         const button = document.createElement('button');
         button.innerHTML = index;
-        button.addEventListener('click', scrollToIndex.bind(window, index));
+        button.addEventListener('click', scrollToItem.bind(window, divDom, items[index]));
         sectionDom.appendChild(button);
     }
 
-    let scrollIntervalId = null;
-    function scrollToIndex(index) {
-        scrollIntervalId && clearInterval(scrollIntervalId);
-        let {offsetTop} = items[index];
-        console.log(divDom.scrollHeight, divDom.clientHeight);
-        if(offsetTop > divDom.scrollHeight - divDom.clientHeight) {
-            offsetTop = divDom.scrollHeight - divDom.clientHeight;
+    // 滚动函数
+    function scrollToItem(parent, gotoItem) {
+        console.log(parent.getBoundingClientRect()); 
+        ;
+        parent.scrollIntervalId && clearInterval(parent.scrollIntervalId);
+        let {offsetTop} = gotoItem;
+        if(offsetTop > parent.scrollHeight - parent.clientHeight) {
+            offsetTop = parent.scrollHeight - parent.clientHeight;
         }
-        scrollIntervalId = setInterval(() => {
-            const disOffset = (offsetTop - divDom.scrollTop) / 7;
-            divDom.scrollTop += disOffset;
+        parent.scrollIntervalId = setInterval(() => {
+            const disOffset = (offsetTop - parent.scrollTop) / 7;
+            parent.scrollTop += disOffset;
             if(Math.abs(disOffset) < 0.05) {
-                divDom.scrollTop = offsetTop;
-                clearInterval(scrollIntervalId);
+                parent.scrollTop = offsetTop;
+                clearInterval(parent.scrollIntervalId);
             }
         }, 17);
     }
