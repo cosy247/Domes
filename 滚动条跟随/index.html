@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            padding: 100px 0;
+            margin: 100px auto 0;
+            width: 500px;
+            height: 500px;
+            border: 2px solid #9a8;
+            border-radius: 10px;
+            overflow-y: auto;
+            background-color: #888;
+            box-sizing: border-box;
+        }
+        p {
+            padding: 0;
+            margin: 0;
+            line-height: 100px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 900;
+        }
+        section {
+            margin: 10px auto 0;
+            width: 500px;
+        }
+        button {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div></div>
+    <section>前去：</section>
+</body>
+<script>
+    // 生成节点
+    const divDom = document.querySelector('div');
+    const items = [];
+    const amount = 20;
+    for (let index = 0; index < amount; index++) {
+        const p = document.createElement('p');
+        p.style.background = `#${(Math.random() * 0xfff << 0).toString(16)}8`;
+        p.innerHTML = index;
+        divDom.appendChild(p);
+        items.push(p);
+    }
+    const sectionDom = document.querySelector('section');
+    for (let index = 0; index < amount; index++) {
+        const button = document.createElement('button');
+        button.innerHTML = index;
+        button.addEventListener('click', scrollToItem.bind(window, divDom, items[index]));
+        sectionDom.appendChild(button);
+    }
+
+    // 滚动函数
+    function scrollToItem(parent, gotoItem) {
+        console.log(parent.getBoundingClientRect()); 
+        ;
+        parent.scrollIntervalId && clearInterval(parent.scrollIntervalId);
+        let {offsetTop} = gotoItem;
+        if(offsetTop > parent.scrollHeight - parent.clientHeight) {
+            offsetTop = parent.scrollHeight - parent.clientHeight;
+        }
+        parent.scrollIntervalId = setInterval(() => {
+            const disOffset = (offsetTop - parent.scrollTop) / 7;
+            parent.scrollTop += disOffset;
+            if(Math.abs(disOffset) < 0.05) {
+                parent.scrollTop = offsetTop;
+                clearInterval(parent.scrollIntervalId);
+            }
+        }, 17);
+    }
+
+</script>
+</html>

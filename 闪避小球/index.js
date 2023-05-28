@@ -15,7 +15,7 @@ window.addEventListener('load', () => {
     /** 当前按下的键 */
     const pressKeys = new Set();
     /** 加速度 */
-    const acceleration = 1;
+    const acceleration = 0.2;
     /** 最大速度 */
     const maxSpeed = 10;
     /** 小人对象 */
@@ -34,50 +34,79 @@ window.addEventListener('load', () => {
      * @datetime: 2023-05-15 21:18:08
      */
     function movePerson(elapsed) {
-        // 获取加速度方向; null 表示没有按键，没有加速度
-        let accelerationDir = null;
+        // 获取速度目标方向
+        let toSpeedDir = null;
         if (pressKeys.has('d') && !pressKeys.has('a')) {
             if (pressKeys.has('w') && !pressKeys.has('s')) {
-                accelerationDir = Math.PI / 4;
+                toSpeedDir = Math.PI / 4;
             } else if (!pressKeys.has('w') && pressKeys.has('s')) {
-                accelerationDir = -Math.PI / 4;
+                toSpeedDir = -Math.PI / 4;
             } else {
-                accelerationDir = 0;
+                toSpeedDir = 0;
             }
         } else if (!pressKeys.has('d') && pressKeys.has('a')) {
             if (pressKeys.has('w') && !pressKeys.has('s')) {
-                accelerationDir = (Math.PI * 3) / 4;
+                toSpeedDir = (Math.PI * 3) / 4;
             } else if (!pressKeys.has('w') && pressKeys.has('s')) {
-                accelerationDir = (-Math.PI * 3) / 4;
+                toSpeedDir = (-Math.PI * 3) / 4;
             } else {
-                accelerationDir = Math.PI;
+                toSpeedDir = Math.PI;
             }
         } else if (pressKeys.has('w') && !pressKeys.has('s')) {
-            accelerationDir = Math.PI / 2;
+            toSpeedDir = Math.PI / 2;
         } else if (!pressKeys.has('w') && pressKeys.has('s')) {
-            accelerationDir = -Math.PI / 2;
+            toSpeedDir = -Math.PI / 2;
         }
 
-        // 修改速度
-        if (accelerationDir === null) {
-            const allSpeed = (person.speedX ** 2 + person.speedY ** 2) ** 0.5;
-            // console.log(allSpeed, person.speedX, person.speedY);
-            const newAllSpeed = allSpeed - acceleration;
-            if(newAllSpeed <= 0) {
-                person.speedX = person.speedY = 0;
-            } else {
-                person.speedX = newAllSpeed * person.speedX / allSpeed;
-                person.speedY = newAllSpeed * person.speedY / allSpeed;
+        // 没有指定方向时将逐渐停止
+        if (toSpeedDir === null) {
+            const speed = (person.speedX ** 2 + person.speedY ** 2) ** 0.5;
+            if (speed !== 0) {
+                const newSpeed = speed > acceleration * elapsed ? speed - acceleration * elapsed : 0;
+                person.speedY = (person.speedY * newSpeed) / speed;
+                person.speedX = (person.speedX * newSpeed) / speed;
             }
         } else {
-            person.speedX += Math.cos(accelerationDir) * acceleration;
-            person.speedY += Math.sin(accelerationDir) * acceleration;
-        }
-        if(person.speedX > maxSpeed || person.speedX < -maxSpeed) {
-            person.speedX = person.speedX > 0 ? maxSpeed : -maxSpeed;
-        }
-        if(person.speedY > maxSpeed || person.speedY < -maxSpeed) {
-            person.speedY = person.speedY > 0 ? maxSpeed : -maxSpeed;
+            const maxSpeedX = maxSpeed * Math.cos(toSpeedDir);
+            const maxSpeedY = maxSpeed * Math.sin(toSpeedDir);
+            // const disSpeedX = Math.abs(acceleration * elapsed * Math.cos(toSpeedDir));
+            // const disSpeedY = Math.abs(acceleration * elapsed * Math.sin(toSpeedDir));
+            if (person.speedX < maxSpeedX) {
+                person.speedX += acceleration * elapsed;
+                if (person.speedX > maxSpeedX) {
+                    person.speedX = maxSpeedX;
+                }
+            } else if (person.speedX > maxSpeedX) {
+                person.speedX -= acceleration * elapsed;
+                if (person.speedX < maxSpeedX) {
+                    person.speedX = maxSpeedX;
+                }
+            }
+            if (person.speedY < maxSpeedY) {
+                person.speedY += acceleration * elapsed;
+                if (person.speedY > maxSpeedY) {
+                    person.speedY = maxSpeedY;
+                }
+            } else if (person.speedY > maxSpeedY) {
+                person.speedY -= acceleration * elapsed;
+                if (person.speedY < maxSpeedY) {
+                    person.speedY = maxSpeedY;
+                }
+            }
+            // person.speedX += disSpeedX;
+            // person.speedY += disSpeedY;
+            // if(person.speedX < maxSpeedX && disSpeedX < 0) {
+            //     person.speedX = maxSpeedX;
+            //     console.log(maxSpeedX);
+            // } else if(person.speedX > maxSpeedX && disSpeedX > 0) {
+            //     person.speedX = maxSpeedX;
+            //     console.log(maxSpeedX);
+            // }
+            // if(person.speedY < maxSpeedY && disSpeedY < 0) {
+            //     person.speedY = maxSpeedY;
+            // } else if(person.speedY > maxSpeedY && disSpeedY > 0) {
+            //     person.speedY = maxSpeedY;
+            // }
         }
 
         // 修改X方向的位置
