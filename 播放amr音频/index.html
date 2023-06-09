@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>播放AMR音频</title>
+        <script src="amrnb.js" defer></script>
+    </head>
+
+    <body>
+        <div style="margin: 200px auto 0; width: fit-content; text-align: center">
+            <audio controls src=""></audio>
+            <br />
+            <input type="text" placeholder="url" value="https://e3c2e7b2cc3d233be050a8c0151a0386.erow.cn:28801/gcgkservice/soa/GetFile.ashx?KeyValue=9f6ff7db-b34c-4a9b-9031-7698205c6efc" />
+            <button onclick="loadAmrAudio()">确认</button>
+        </div>
+        <script>
+            function loadAmrAudio() {
+                getAmrBlobUrl(document.querySelector('input').value, (url) => {
+                    document.querySelector('audio').src = url;
+                });
+            }
+
+            /**
+             * @description: 转换amr文件地址为可以播放地址
+             * @param {string} url: amr文件地址
+             * @param {function} callback: 地址转换后的回调函数
+             * @return {string}: 转换后的url地址
+             */
+            function getAmrBlobUrl(url, callback) {
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', url);
+                xhr.responseType = 'blob';
+                xhr.onload = function () {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        var data = new Uint8Array(e.target.result);
+                        var buffer = AMR.toWAV(data);
+                        var url = URL.createObjectURL(new Blob([buffer], { type: 'audio/x-wav' }));
+                        callback && callback(url);
+                    };
+                    reader.readAsArrayBuffer(this.response);
+                };
+                xhr.onerror = function () {
+                    alert('文件获取失败: ' + url);
+                };
+                xhr.send();
+            }
+        </script>
+    </body>
+</html>
