@@ -1,5 +1,5 @@
-import { data } from "./module.js";
-
+import data from "./module.js";
 console.log(data);
-data.name = 123;
+
+data.a = 1;
 console.log(data);
