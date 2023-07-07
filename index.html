@@ -17,7 +17,6 @@
                 flex-direction: column;
                 justify-content: center;
                 min-height: 100vh;
-                background: linear-gradient(35deg, rgb(96, 161, 153), rgb(129, 136, 201), rgb(157, 194, 129), rgb(202, 137, 172), rgb(215, 188, 167), rgb(195, 185, 166));
                 user-select: none;
             }
 
@@ -38,8 +37,36 @@
     </head>
     <body>
         <h1>😏</h1>
+        <a href="./记事本/">烟花</a>
         <a href="./烟花/">烟花</a>
         <a href="./高德地图关键词搜索/">高德地图关键词搜索</a>
         <a href="./闪避小球/">闪避小球</a>
     </body>
+    <script>
+        (() => {
+            /** 跳转路由 */
+            const hrefs = ['记事本', '烟花', '高德地图关键词搜索', '闪避小球'];
+
+            /**
+             * @description: 获取随机整数
+             */
+            function getRandom(max) {
+                return Math.floor(Math.random() * max);
+            }
+
+            // 设置内容
+            document.body.innerHTML = `
+                <h1>
+                    ${['🚀', '🚂', '🎨', '🎲', '📰', '🧮', '💵', '🥀', '🌺', '🍂', '🌳', '🚒', '🛫', '🏕️', '🥰', '🌟', '🌊'][getRandom(17)]}
+                </h1>
+                ${hrefs.map((item) => `<a href="./${item}">${item}</a>`).join('')}
+            `;
+
+            // 设置背景
+            document.body.style.background = `linear-gradient(35deg, ${Array(3)
+                .fill(1)
+                .map(() => `rgba(${getRandom(255)},${getRandom(255)},${getRandom(255)},0.3)`)
+                .join(',')}`;
+        })();
+    </script>
 </html>
