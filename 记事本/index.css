@@ -1,0 +1,50 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    min-height: 100vh;
+}
+
+.loginBox {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    padding: 20px 50px;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    box-shadow: 0 0 10px #8888;
+}
+
+.loginBox p {
+    font-size: 20px;
+    font-weight: 100;
+}
+
+.loginBox input {
+    border: none;
+    outline: none;
+    font-size: 20px;
+    border-bottom: 1px solid #859;
+    width: 200px;
+    display: block;
+    text-indent: 0.5em;
+    margin-top: 10px;
+	font-weight: 100;
+	font-family: none;
+	color: #637;
+}
+
+.loginBox button {
+    font-size: 15px;
+	display: block;
+    margin: 10px auto 0;
+    padding: 5px 10px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px #aaa solid;
+    cursor: pointer;
+    background: #eee;
+	color: #333;
+}

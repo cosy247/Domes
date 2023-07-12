@@ -1,4 +1,6 @@
+useData(() => {
+	const a = 1;
+	
+});
 
-
-export let number = 1;
-export let data = { name: 'wendy' };
+export default data;

@@ -39,12 +39,33 @@
             }
         </style>
     </head>
-    <body></body>
+    <body>
+    </body>
     <script>
-        document.body.innerHTML += `
-            <p>${['😊', '😘', '🤣', '😂', '😍', '😁', '😜', '😎', '🥰', '🤩'][(Math.random() * 10) << 0]}</p>
-            ${['备忘录', '烟花', '高德地图关键词搜索', '闪避小球'].map((name) => `<a href="./${name}">${name}</a>`).join('')}
-        `;
-        document.body.style.background = `linear-gradient(35deg, #${ Math.floor(Math.random() * 16777215).toString(16).padStart(6, 0)}80, #${ Math.floor(Math.random() * 16777215).toString(16).padStart(6, 0)}80, #${ Math.floor(Math.random() * 16777215).toString(16).padStart(6, 0)}80, #${ Math.floor(Math.random() * 16777215).toString(16).padStart(6, 0)}80, #${ Math.floor(Math.random() * 16777215).toString(16).padStart(6, 0)}80, #${ Math.floor(Math.random() * 16777215).toString(16).padStart(6, 0)}80)`
+        (() => {
+            /** 跳转路由 */
+            const hrefs = ['记事本', '烟花', '高德地图关键词搜索', '闪避小球'];
+
+            /**
+             * @description: 获取随机整数
+             */
+            function getRandom(max) {
+                return Math.floor(Math.random() * max);
+            }
+
+            // 设置内容
+            document.body.innerHTML = `
+                <h1>
+                    ${['🚀', '🚂', '🎨', '🎲', '📰', '🧮', '💵', '🥀', '🌺', '🍂', '🌳', '🚒', '🛫', '🏕️', '🥰', '🌟', '🌊'][getRandom(17)]}
+                </h1>
+                ${hrefs.map((item) => `<a href="./${item}">${item}</a>`).join('')}
+            `;
+
+            // 设置背景
+            document.body.style.background = `linear-gradient(35deg, ${Array(3)
+                .fill(1)
+                .map(() => `rgba(${getRandom(255)},${getRandom(255)},${getRandom(255)},0.3)`)
+                .join(',')}`;
+        })();
     </script>
 </html>
