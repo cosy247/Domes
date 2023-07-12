@@ -17,8 +17,11 @@
                 flex-direction: column;
                 justify-content: center;
                 min-height: 100vh;
-                background: linear-gradient(35deg, rgb(96, 161, 153), rgb(129, 136, 201), rgb(157, 194, 129), rgb(202, 137, 172), rgb(215, 188, 167), rgb(195, 185, 166));
                 user-select: none;
+            }
+
+            p {
+                font-size: 50px;
             }
 
             a {
@@ -36,10 +39,12 @@
             }
         </style>
     </head>
-    <body>
-        <h1>😏</h1>
-        <a href="./烟花/">烟花</a>
-        <a href="./高德地图关键词搜索/">高德地图关键词搜索</a>
-        <a href="./闪避小球/">闪避小球</a>
-    </body>
+    <body></body>
+    <script>
+        document.body.innerHTML += `
+            <p>${['😊', '😘', '🤣', '😂', '😍', '😁', '😜', '😎', '🥰', '🤩'][(Math.random() * 10) << 0]}</p>
+            ${['备忘录', '烟花', '高德地图关键词搜索', '闪避小球'].map((name) => `<a href="./${name}">${name}</a>`).join('')}
+        `;
+        document.body.style.background = `linear-gradient(35deg, #${ Math.floor(Math.random() * 16777215).toString(16).padStart(6, 0)}80, #${ Math.floor(Math.random() * 16777215).toString(16).padStart(6, 0)}80, #${ Math.floor(Math.random() * 16777215).toString(16).padStart(6, 0)}80, #${ Math.floor(Math.random() * 16777215).toString(16).padStart(6, 0)}80, #${ Math.floor(Math.random() * 16777215).toString(16).padStart(6, 0)}80, #${ Math.floor(Math.random() * 16777215).toString(16).padStart(6, 0)}80)`
+    </script>
 </html>
