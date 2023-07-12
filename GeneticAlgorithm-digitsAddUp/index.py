@@ -1,5 +1,3 @@
-# coding=gb2312
-
 import random
 
 # 个体数量
