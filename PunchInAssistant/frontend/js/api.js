@@ -1,4 +1,4 @@
-window.api = {
+export default  {
     get({ url, data = {} }) {
         return new Promise((resolve, reject) => {
             const httpRequest = new XMLHttpRequest();
