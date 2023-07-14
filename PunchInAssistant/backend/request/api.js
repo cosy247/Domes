@@ -1,7 +1,7 @@
 var http = require('https');
 
 module.exports = {
-    async get({ url, data = {} }) {
+    get({ url, data = {} }) {
         return new Promise((resolve, reject) => {
             const dataString = Object.entries(data)
                 .map((key, value) => `${key}=${value}`)

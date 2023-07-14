@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body></body>
+    <script>
+function getChangePhone(oldList, newList) {
+    // 获取部门姓名与号码的对应关系
+    const dataObj = oldList.reduce((obj, item) => {
+        obj[`${item.department}-${item.name}`] = `旧号码${item.phone || '(空)'}新号码(空)`;
+        return obj;
+    }, {});
+    // 用新电话对旧电话进行修正
+    newList.forEach((item) => {
+        if (dataObj[`${item.department}-${item.name}`]) {
+            dataObj[`${item.department}-${item.name}`] = dataObj[`${item.department}-${item.name}`].replace('新号码(空)', `新号码${item.phone}`);
+        } else {
+            dataObj[`${item.department}-${item.name}`] = `旧号码(空)新号码(${item.phone})`;
+        }
+    });
+    // 将对象转化为需要的数据格式
+    return Object.entries(dataObj).map(([dena, change]) => {
+        console.log(dena, change);
+        const [department, name] = dena.split('-');
+        return { department, name, change };
+    });
+}
+        const oldList = [
+            { department: '部门1', name: '姓名1', phone: '11111' },
+            { department: '部门2', name: '姓名2', phone: '22222' },
+            { department: '部门3', name: '姓名3' },
+        ];
+        const newList = [
+            { department: '部门2', name: '姓名2', phone: '77777' },
+            { department: '部门3', name: '姓名3', phone: '88888' },
+            { department: '部门4', name: '姓名4', phone: '99999' },
+        ];
+		console.log(getChangePhone(oldList, newList));
+    </script>
+</html>
