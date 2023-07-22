@@ -4,16 +4,21 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
+        <link rel="stylesheet" href="./style/index.css">
         <script src="http://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
         <script src="./js/sha1.js"></script>
         <script src="./js/api.js"></script>
     </head>
+
     <body>
-        <button onclick="senShare()">发送分享</button>
+        <p class="title">打卡助手</p>
+        <div class="send-button" onclick="sendShare()">发送分享</div>
     </body>
 
+    <script type="module" src="./js/index.js"></script>
+    
     <script>
-        async function senShare() {
+        async function sendShare() {
             const appId = 'wx8f6343e976dfba3a';
 
             // 获取token
