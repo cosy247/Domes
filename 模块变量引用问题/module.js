@@ -1,6 +1,6 @@
-useData(() => {
-	const a = 1;
-	
-});
+const data = (() => ({
+    a: 1,
+    b: 2,
+}))();
 
-export default data;
+export default getValue();

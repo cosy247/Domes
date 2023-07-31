@@ -1,9 +1,5 @@
-import data from "./module.js";
-console.log(data);
+import data from './module.js';
 
-data.a = 1;
 console.log(data);
-
-useData({
-	wi: 123
-})
+data.a = 222;
+console.log(data);
